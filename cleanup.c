@@ -3,7 +3,7 @@
 //
 
 #include <SDL2/SDL.h>
-#include <SDL_image.h>
+#include <SDL2/SDL_image.h>
 #include "cub3d.h"
 
 static void	cub3d_free_surfaces(t_data *data);

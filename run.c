@@ -113,7 +113,11 @@ static void	render_time(t_data *data)
 	u_int64_t	time;
 
 	time = get_time() - data->start.start_time;
+#ifdef __Darwin
 	sprintf(temp, "%llu.%llus", time / 1000, time % 1000);
+#elif __unix
+	sprintf(temp, "%lu.%lus", time / 1000, time % 1000);
+#endif // !!!!! #else
 }
 
 static void	finish_game(t_data *data)

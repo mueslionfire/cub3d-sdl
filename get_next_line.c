@@ -13,6 +13,7 @@ static int	copy_buf_to_rest(char **rest, char *buf, int length);
 static int	check_for_new_line(const char *string, int length);
 static char	**init_static(char **rest, int fd);
 static void	check_n_cleanup_static(char ***rest);
+static size_t	gnl_strlcpy(char *dst, const char *src, size_t dstsize);
 
 char	*get_next_line(int fd)
 {
@@ -113,9 +114,9 @@ static int	copy_buf_to_rest(char **rest, char *buf, int length)
 		return (-1);
 	copy = *rest;
 	if (tmp != NULL)
-		strlcpy (copy, tmp, len_rest + 1);
+		gnl_strlcpy (copy, tmp, len_rest + 1);
 	buf[length] = '\0';
-	strlcpy (&copy[len_rest], buf, length + 1);
+	gnl_strlcpy (&copy[len_rest], buf, length + 1);
 	if (tmp != NULL)
 		free (tmp);
 	return (0);
@@ -130,7 +131,7 @@ static char	*prep_line(char **rest, int length)
 	line = malloc (length + 1);
 	if (line == NULL)
 		return (NULL);
-	strlcpy (line, *rest, length + 1);
+	gnl_strlcpy (line, *rest, length + 1);
 	len_rest = strlen (*rest);
 	tmp = *rest;
 	*rest = malloc (len_rest - length + 1);
@@ -139,7 +140,7 @@ static char	*prep_line(char **rest, int length)
 		free (line);
 		return (NULL);
 	}
-	strlcpy (*rest, &tmp[length], len_rest - length + 1);
+	gnl_strlcpy (*rest, &tmp[length], len_rest - length + 1);
 	free (tmp);
 	return (line);
 }
@@ -212,4 +213,22 @@ static void	check_n_cleanup_static(char ***rest)
 		free (*rest);
 		*rest = NULL;
 	}
+}
+
+static size_t	gnl_strlcpy(char *dst, const char *src, size_t dstsize)
+{
+	size_t	i;
+	size_t	size;
+
+	size = strlen (src);
+	if (dstsize == 0)
+		return (size);
+	i = 0;
+	while (i < dstsize - 1 && src[i] != '\0')
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (size);
 }

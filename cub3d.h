@@ -166,6 +166,7 @@ long long	get_time(void);
 void	ft_bzero64(void *s, size_t n);
 int		create_trgb(int t, int r, int g, int b);
 int		get_color_from_surface(SDL_Surface *surface, int offset);
+size_t	cub3d_strlcpy(char *dst, const char *src, size_t dstsize);
 
 // sdl_utils.c
 SDL_Surface	*load_surface(const char *path);

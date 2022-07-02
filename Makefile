@@ -10,10 +10,16 @@ textures.c run.c raycast.c input.c keys.c minimap.c
 CC ?= cc
 LD ?= cc
 CFLAGS = -Wall -Wextra -Werror
-LIBSDL2 = -I./SDL/includes ./SDL/lib/SDL2 ./SDL/lib/SDL2_image
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S), Darwin)
+	LIBSDL2 = -I./SDL/includes ./SDL/lib/SDL2 ./SDL/lib/SDL2_image
+endif
+ifeq ($(UNAME_S), Linux)
+	LIBSDL2 = -lSDL2 -lSDL2_image
+endif
 
 $(NAME):
-	$(CC) $(CFLAGS) $(SRCFILES) $(LIBSDL2) -o $(NAME)
+	$(CC) $(CFLAGS) $(SRCFILES) -lm $(LIBSDL2) -o $(NAME)
 
 .PHONY: all bonus debug clean fclean re
 
@@ -23,7 +29,7 @@ bonus: $(NAME)
 
 debug: CFLAGS += -g3
 debug:
-	$(CC) $(CFLAGS) $(SRCFILES) $(LIBSDL2) -o $(NAME)
+	$(CC) $(CFLAGS) $(SRCFILES) -lm $(LIBSDL2) -o $(NAME)
 
 clean:
 

@@ -3,7 +3,7 @@
 //
 
 #include <SDL2/SDL.h>
-#include <SDL_image.h>
+#include <SDL2/SDL_image.h>
 #include "cub3d.h"
 
 static int	cub3d_sdl_init(t_data *data);
@@ -52,7 +52,7 @@ static int	cub3d_sdl_init(t_data *data)
 static void	general_init(t_data *data, const char *user_name)
 {
 	if (user_name != NULL)
-		strlcpy(data->user_name, user_name, MAX_NAME_LEN);
+		cub3d_strlcpy(data->user_name, user_name, MAX_NAME_LEN);
 	data->current_time = 0;
 	data->initial_time = get_time();
 	data->map.flr.r = -1;

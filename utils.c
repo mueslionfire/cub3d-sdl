@@ -73,3 +73,21 @@ int	get_color_from_surface(SDL_Surface *surface, int offset)
 	pixels = (int *)surface->pixels;
 	return pixels[offset];
 }
+
+size_t	cub3d_strlcpy(char *dst, const char *src, size_t dstsize)
+{
+	size_t	i;
+	size_t	size;
+
+	size = strlen (src);
+	if (dstsize == 0)
+		return (size);
+	i = 0;
+	while (i < dstsize - 1 && src[i] != '\0')
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (size);
+}
