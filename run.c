@@ -118,6 +118,7 @@ static void	render_time(t_data *data)
 #elif __unix
 	sprintf(temp, "%lu.%lus", time / 1000, time % 1000);
 #endif // !!!!! #else
+	(void)temp; // !!!!!
 }
 
 static void	finish_game(t_data *data)
